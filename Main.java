@@ -1,25 +1,33 @@
 public class Main {
     public static void main(String[] args) {
-        TabelaHash tabela = new TabelaHash();
+        TabelaHashEncadeamento tabelaenc = new TabelaHashEncadeamento();
 
-        tabela.inserirComEncadeamento(5);
-        tabela.inserirComEncadeamento(15);
+        tabelaenc.inserirComEncadeamento(2);
+        tabelaenc.inserirComEncadeamento(200);
 
         System.out.println("Usando Encadeamento:");
-        tabela.imprimirTabela();
+        tabelaenc.imprimirTabelaEnc();
 
-        tabela.removerComEncadeamento(5);
+        tabelaenc.removerComEncadeamento(5);
         System.out.println("\nApós remoção:");
-        tabela.imprimirTabela();
+        tabelaenc.imprimirTabelaEnc();
 
-        tabela.inserirComEnderecamentoAberto(8);
-        tabela.inserirComEnderecamentoAberto(18);
 
-        System.out.println("\nUsando Endereçamento Aberto:");
-        tabela.imprimirTabela();
+        TabelaHashEnderecamento tabelaend = new TabelaHashEnderecamento();
+        System.out.println("Usando Endereçamento Aberto:");
 
-        tabela.removerComEnderecamentoAberto(8);
+        tabelaend.inserirComEnderecamentoAberto(2);
+        tabelaend.inserirComEnderecamentoAberto(200);
+        tabelaend.inserirComEnderecamentoAberto(25);
+        tabelaend.inserirComEnderecamentoAberto(7);
+        tabelaend.imprimirTabelaEnd();
+
+        System.out.println("Buscar 5: " + tabelaend.buscarComEnderecamentoAberto(5)); // Deve imprimir true
+        System.out.println("Buscar 15: " + tabelaend.buscarComEnderecamentoAberto(15)); // Deve imprimir true
+        System.out.println("Buscar 7: " + tabelaend.buscarComEnderecamentoAberto(7)); // Deve imprimir true
+
+        tabelaend.removerComEnderecamentoAberto(5);
         System.out.println("\nApós remoção:");
-        tabela.imprimirTabela();
+        System.out.println("Buscar 5: " + tabelaend.buscarComEnderecamentoAberto(5)); // Deve imprimir false
     }
 }
