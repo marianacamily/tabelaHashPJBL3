@@ -1,150 +1,88 @@
 import java.util.LinkedList;
-import java.lang.System;
 
 class TabelaHash {
-    private LinkedList<Integer>[] tabela; // Array de listas encadeadas para encadeamento
-    private int[] tabelaLinear; // Array para sondagem linear
     private int tamanho;
+    private LinkedList<Integer>[] tabela;
 
     public TabelaHash(int tamanho) {
         this.tamanho = tamanho;
-        this.tabela = new LinkedList[tamanho];
-        this.tabelaLinear = new int[tamanho];
+        tabela = new LinkedList[tamanho];
         for (int i = 0; i < tamanho; i++) {
             tabela[i] = new LinkedList<>();
-            tabelaLinear[i] = -1;
         }
     }
 
-    // Funções de Hash
-    private int hashLinear(int chave) {
-        return chave % tamanho;
+    // Função de hash usando módulo 11
+    private int hash(int chave) {
+        return chave % 11;
     }
 
-    private int hashEncadeamento(int chave) {
-        return chave % tamanho;
+    // Inserção usando encadeamento (chaining)
+    public void inserirComEncadeamento(int valor) {
+        int indice = hash(valor);
+        tabela[indice].add(valor);
+    }
+
+    // Remoção usando encadeamento (chaining)
+    public void removerComEncadeamento(int valor) {
+        int indice = hash(valor);
+        tabela[indice].remove(Integer.valueOf(valor)); // Remove a primeira ocorrência de 'valor'
+    }
+
+    // Busca usando encadeamento (chaining)
+    public boolean buscarComEncadeamento(int valor) {
+        int indice = hash(valor);
+        return tabela[indice].contains(valor);
     }
 
     // Inserção usando sondagem linear
-    public void inserçãoLinear(int chave) {
-        int indice = hashLinear(chave);
-
-        while (tabelaLinear[indice] != -1) {
-            indice = (indice + 1) % tamanho; // Sondagem linear
+    public void inserirComSondagemLinear(int valor) {
+        int indice = hash(valor);
+        int i = 1;
+        while (tabela[indice].size() > 0) {
+            indice = (indice + i) % tamanho;
+            i++;
         }
-
-        tabelaLinear[indice] = chave;
-    }
-
-    // Inserção usando encadeamento
-    public void inserçãoEncadeamento(int chave) {
-        int indice = hashEncadeamento(chave);
-        tabela[indice].add(chave);
-    }
-
-    // Busca usando sondagem linear
-    public boolean buscaLinear(int chave) {
-        long tempoInicial = System.currentTimeMillis();
-        long tempoFinal = System.currentTimeMillis();
-        long tempoTotal = tempoFinal - tempoInicial;
-        System.out.println("Tempo total de busca: " + tempoTotal + " milissegundos");
-
-        int indice = hashLinear(chave);
-
-        while (tabelaLinear[indice] != -1) {
-            if (tabelaLinear[indice] == chave) {
-                return true;
-            }
-            indice = (indice + 1) % tamanho; // Sondagem linear
-        }
-        return false;
-
-        
-    }
-
-    // Busca usando encadeamento
-    public boolean buscaEncadeamento(int chave) {
-        long tempoInicial = System.currentTimeMillis();
-        long tempoFinal = System.currentTimeMillis();
-        long tempoTotal = tempoFinal - tempoInicial;
-        System.out.println("Tempo total de busca: " + tempoTotal + " milissegundos");
-        
-        int indice = hashEncadeamento(chave);
-        LinkedList<Integer> lista = tabela[indice];
-        return lista.contains(chave);
+        tabela[indice].add(valor);
     }
 
     // Remoção usando sondagem linear
-    public void remoçãoLinear(int chave) {
-        int indice = hashLinear(chave);
-
-        while (tabelaLinear[indice] != -1) {
-            if (tabelaLinear[indice] == chave) {
-                tabelaLinear[indice] = -1;
+    public void removerComSondagemLinear(int valor) {
+        int indice = hash(valor);
+        int i = 1;
+        while (tabela[indice].size() > 0) {
+            if (tabela[indice].contains(valor)) {
+                tabela[indice].remove(Integer.valueOf(valor)); // Remove a primeira ocorrência de 'valor'
                 return;
             }
-            indice = (indice + 1) % tamanho; // Sondagem linear
+            indice = (indice + i) % tamanho;
+            i++;
         }
     }
 
-    // Remoção usando encadeamento
-    public void remoçãoEncadeamento(int chave) {
-        int indice = hashEncadeamento(chave);
-        LinkedList<Integer> lista = tabela[indice];
-
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i) == chave) {
-                lista.remove(i);
-                return;
+    // Busca usando sondagem linear
+    public boolean buscarComSondagemLinear(int valor) {
+        int indice = hash(valor);
+        int i = 1;
+        while (tabela[indice].size() > 0) {
+            if (tabela[indice].contains(valor)) {
+                return true;
             }
+            indice = (indice + i) % tamanho;
+            i++;
         }
+        return false;
     }
 
-    // Função para imprimir a tabela
-    public void imprimir() {
-        System.out.println("Tabela com Sondagem Linear:");
+    // Função para imprimir a tabela hash
+    public void imprimirTabela() {
         for (int i = 0; i < tamanho; i++) {
-            System.out.println("Slot " + i + ": " + tabelaLinear[i]);
-        }
-
-        System.out.println("\nTabela com Encadeamento:");
-        for (int i = 0; i < tamanho; i++) {
-            System.out.print("Slot " + i + ": ");
-            for (Integer elemento : tabela[i]) {
-                System.out.print(elemento + " -> ");
+            System.out.print("Índice " + i + ": ");
+            for (Integer valor : tabela[i]) {
+                System.out.print(valor + " -> ");
             }
-            System.out.println();
+            System.out.println("null");
         }
-    }
-    public static void main(String[] args) {
-        TabelaHash tabela = new TabelaHash(10);
-
-        tabela.inserçãoLinear(5);
-        tabela.inserçãoLinear(15);
-        tabela.inserçãoLinear(25);
-        tabela.inserçãoLinear(35);
-        tabela.inserçãoLinear(45);
-        tabela.inserçãoLinear(10);
-
-        tabela.inserçãoEncadeamento(7);
-        tabela.inserçãoEncadeamento(17);
-        tabela.inserçãoEncadeamento(27);
-        tabela.inserçãoEncadeamento(37);
-        tabela.inserçãoEncadeamento(47);
-        tabela.inserçãoEncadeamento(12);
-
-        tabela.imprimir();
-
-        System.out.println("\nBusca por 15 (Sondagem Linear): " + tabela.buscaLinear(15));
-        System.out.println("Busca por 20 (Sondagem Linear): " + tabela.buscaLinear(20));
-
-        System.out.println("\nBusca por 15 (Encadeamento): " + tabela.buscaEncadeamento(15));
-        System.out.println("Busca por 20 (Encadeamento): " + tabela.buscaEncadeamento(20));
-
-        tabela.remoçãoLinear(35);
-        tabela.remoçãoEncadeamento(27);
-
-        System.out.println("\nApós a remoção (Sondagem Linear):");
-        tabela.imprimir();
     }
 }
+
