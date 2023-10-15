@@ -1,10 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        TabelaHash tabela = new TabelaHash(11);
+        TabelaHash tabela = new TabelaHash();
 
-        tabela.inserirComEncadeamento(200);
-        tabela.inserirComEncadeamento(2);
-        tabela.inserirComEncadeamento(25);
+        tabela.inserirComEncadeamento(5);
+        tabela.inserirComEncadeamento(15);
 
         System.out.println("Usando Encadeamento:");
         tabela.imprimirTabela();
@@ -13,14 +12,13 @@ public class Main {
         System.out.println("\nApós remoção:");
         tabela.imprimirTabela();
 
-        tabela.inserirComSondagemLinear(8);
-        tabela.inserirComSondagemLinear(18);
-        tabela.inserirComSondagemLinear(28);
+        tabela.inserirComEnderecamentoAberto(8);
+        tabela.inserirComEnderecamentoAberto(18);
 
-        System.out.println("\nUsando Sondagem Linear:");
+        System.out.println("\nUsando Endereçamento Aberto:");
         tabela.imprimirTabela();
 
-        tabela.removerComSondagemLinear(8);
+        tabela.removerComEnderecamentoAberto(8);
         System.out.println("\nApós remoção:");
         tabela.imprimirTabela();
     }

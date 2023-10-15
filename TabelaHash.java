@@ -3,78 +3,109 @@ import java.util.LinkedList;
 class TabelaHash {
     private int tamanho;
     private LinkedList<Integer>[] tabela;
+    private int elementos;
+    private double fatorDeCargaLimite = 0.75;
 
-    public TabelaHash(int tamanho) {
-        this.tamanho = tamanho;
+    public TabelaHash() {
+        this.tamanho = 11; // Tamanho fixo da tabela hash
         tabela = new LinkedList[tamanho];
         for (int i = 0; i < tamanho; i++) {
             tabela[i] = new LinkedList<>();
         }
+        elementos = 0;
     }
 
-    // Função de hash usando módulo 11
     private int hash(int chave) {
         return chave % 11;
     }
 
-    // Inserção usando encadeamento (chaining)
+    // Inserção com tratamento de colisão por encadeamento interno
     public void inserirComEncadeamento(int valor) {
         int indice = hash(valor);
         tabela[indice].add(valor);
+        elementos++;
+
+        // Verifica o fator de carga
+        if ((double) elementos / tamanho > fatorDeCargaLimite) {
+            redimensionarTabela();
+        }
     }
 
-    // Remoção usando encadeamento (chaining)
+    // Remoção com tratamento de colisão por encadeamento interno
     public void removerComEncadeamento(int valor) {
         int indice = hash(valor);
-        tabela[indice].remove(Integer.valueOf(valor)); // Remove a primeira ocorrência de 'valor'
+        if (tabela[indice].remove(Integer.valueOf(valor))) {
+            elementos--;
+        }
     }
 
-    // Busca usando encadeamento (chaining)
+    // Busca com tratamento de colisão por encadeamento interno
     public boolean buscarComEncadeamento(int valor) {
         int indice = hash(valor);
         return tabela[indice].contains(valor);
     }
 
-    // Inserção usando sondagem linear
-    public void inserirComSondagemLinear(int valor) {
+    // Inserção com tratamento de colisão por endereçamento aberto
+    public void inserirComEnderecamentoAberto(int valor) {
         int indice = hash(valor);
-        int i = 1;
-        while (tabela[indice].size() > 0) {
-            indice = (indice + i) % tamanho;
-            i++;
+        while (tabela[indice] != null) {
+            indice = (indice + 1) % tamanho;
         }
+        tabela[indice] = new LinkedList<>();
         tabela[indice].add(valor);
-    }
+        elementos++;
 
-    // Remoção usando sondagem linear
-    public void removerComSondagemLinear(int valor) {
-        int indice = hash(valor);
-        int i = 1;
-        while (tabela[indice].size() > 0) {
-            if (tabela[indice].contains(valor)) {
-                tabela[indice].remove(Integer.valueOf(valor)); // Remove a primeira ocorrência de 'valor'
-                return;
-            }
-            indice = (indice + i) % tamanho;
-            i++;
+        // Verifica o fator de carga
+        if ((double) elementos / tamanho > fatorDeCargaLimite) {
+            redimensionarTabela();
         }
     }
 
-    // Busca usando sondagem linear
-    public boolean buscarComSondagemLinear(int valor) {
+    // Remoção com tratamento de colisão por endereçamento aberto
+    public void removerComEnderecamentoAberto(int valor) {
         int indice = hash(valor);
-        int i = 1;
-        while (tabela[indice].size() > 0) {
+        while (tabela[indice] != null) {
+            if (tabela[indice].contains(valor)) {
+                tabela[indice].remove(Integer.valueOf(valor));
+                elementos--;
+                break;
+            }
+            indice = (indice + 1) % tamanho;
+        }
+    }
+
+    // Busca com tratamento de colisão por endereçamento aberto
+    public boolean buscarComEnderecamentoAberto(int valor) {
+        int indice = hash(valor);
+        while (tabela[indice] != null) {
             if (tabela[indice].contains(valor)) {
                 return true;
             }
-            indice = (indice + i) % tamanho;
-            i++;
+            indice = (indice + 1) % tamanho;
         }
         return false;
     }
 
-    // Função para imprimir a tabela hash
+    // Redimensiona a tabela hash quando o fator de carga é alto
+    private void redimensionarTabela() {
+        int novoTamanho = tamanho * 2;
+        LinkedList<Integer>[] novaTabela = new LinkedList[novoTamanho];
+
+        for (int i = 0; i < novoTamanho; i++) {
+            novaTabela[i] = new LinkedList<>();
+        }
+
+        for (LinkedList<Integer> lista : tabela) {
+            for (int valor : lista) {
+                int novoIndice = valor % novoTamanho;
+                novaTabela[novoIndice].add(valor);
+            }
+        }
+
+        tamanho = novoTamanho;
+        tabela = novaTabela;
+    }
+
     public void imprimirTabela() {
         for (int i = 0; i < tamanho; i++) {
             System.out.print("Índice " + i + ": ");
@@ -85,4 +116,8 @@ class TabelaHash {
         }
     }
 }
+
+
+
+
 
