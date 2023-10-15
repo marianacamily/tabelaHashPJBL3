@@ -3,5 +3,5 @@ Trabalho da disciplina de Estrutura de Dados, feito por Beatriz Petry, Julia Eng
 
 # Tratamento de Colisão
 Neste caso, iremos utilizar 2 maneiras de tratar essas colisões, sendo elas: 
-# 1. Sondagem Linear: Na sondagem linear, quando ocorre uma colisão, o algoritmo procura o próximo slot disponível sequencialmente.
-# 2. Sondagem Quadrática: Na sondagem quadrática, quando ocorre uma colisão, o algoritmo procura o próximo slot disponível usando uma função quadrática.
+1. Sondagem Linear: Na sondagem linear, quando ocorre uma colisão, o algoritmo procura o próximo slot disponível sequencialmente.
+2. Sondagem Quadrática: Na sondagem quadrática, quando ocorre uma colisão, o algoritmo procura o próximo slot disponível usando uma função quadrática.
