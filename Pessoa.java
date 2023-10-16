@@ -1,17 +1,17 @@
 public class Pessoa {
     private int id;
-    private int matricula;
+    private String ocupacao;
 
-    public Pessoa(int id, int matricula) {
+    public Pessoa(int id, String ocupacao) {
         this.id = id;
-        this.matricula = matricula;
+        this.ocupacao = ocupacao;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getMatricula() {
-        return matricula;
+    public String getOcupacao() {
+        return ocupacao;
     }
 }

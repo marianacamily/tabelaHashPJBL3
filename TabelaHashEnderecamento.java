@@ -14,7 +14,7 @@ class TabelaHashEnderecamento {
         return chave % 11;
     }
 
-    public void inserirComEnderecamentoAberto(int chave, int valor) {
+    public void inserirComEnderecamentoAberto(int chave, String valor) {
         if ((double) elementos / tamanho >= fatorDeCargaLimite) {
             redimensionarTabela();
         }
@@ -37,14 +37,14 @@ class TabelaHashEnderecamento {
                 tabelaend[indice] = null;
                 elementos--;
                 reorganizarTabela();
-                System.out.println("Pessoa com a chave " + chave + " foi removida.");
+                System.out.println("Pessoa com o ID " + chave + " foi removida.");
                 return;
             }
             indice = (indice + 1) % tamanho;
         }
     
         // Se chegou aqui, o valor não está na tabela
-        System.out.println("Pessoa com a chave " + chave + " não está na tabela.");
+        System.out.println("Pessoa com o ID " + chave + " não está na tabela.");
     }
 
     public boolean buscarComEnderecamentoAberto(int chave) {
@@ -52,7 +52,7 @@ class TabelaHashEnderecamento {
 
         while (tabelaend[indice] != null) {
             if (tabelaend[indice].getId() == chave) {
-                System.out.print("ID: " + tabelaend[indice].getId() + ", Matrícula: " + tabelaend[indice].getMatricula());
+                System.out.print("ID: " + tabelaend[indice].getId() + ", Ocupação: " + tabelaend[indice].getOcupacao());
                 return true;
             }
             indice = (indice + 1) % tamanho;
@@ -68,7 +68,7 @@ class TabelaHashEnderecamento {
             Pessoa pair = tabelaend[i];
             if (pair != null) {
                 int chave = pair.getId();
-                int valor = pair.getMatricula();
+                String valor = pair.getOcupacao();
                 int novoIndice = hash(chave);
 
                 while (novaTabela[novoIndice] != null) {
@@ -91,7 +91,7 @@ class TabelaHashEnderecamento {
             Pessoa pair = tabelaend[i];
             if (pair != null) {
                 int chave = pair.getId();
-                int valor = pair.getMatricula();
+                String valor = pair.getOcupacao();
                 int novoIndice = hash(chave);
 
                 while (novaTabela[novoIndice] != null) {
@@ -108,7 +108,7 @@ class TabelaHashEnderecamento {
     public void imprimirTabelaEnd() {
         for (int i = 0; i < tamanho; i++) {
             if (tabelaend[i] != null) {
-                System.out.println("Índice " + i + ": " + "(" + tabelaend[i].getId() + ", " + tabelaend[i].getMatricula() + ")");
+                System.out.println("Índice " + i + ": " + "(" + tabelaend[i].getId() + ", " + tabelaend[i].getOcupacao() + ")");
             } else {
                 System.out.println("Índice " + i + ": null");
             }

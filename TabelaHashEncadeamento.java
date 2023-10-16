@@ -20,7 +20,7 @@ class TabelaHashEncadeamento {
         return chave % 11;
     }
 
-    public void inserirComEncadeamento(int chave, int valor) {
+    public void inserirComEncadeamento(int chave, String valor) {
         int indice = hash(chave);
         tabelaenc[indice].add(new Pessoa(chave, valor));
         elementos++;
@@ -38,13 +38,13 @@ class TabelaHashEncadeamento {
             if (pessoa.getId() == chave) {
                 lista.remove(pessoa);
                 elementos--;
-                System.out.println("Pessoa com a chave " + chave + " foi removida.");
+                System.out.println("Pessoa com o ID " + chave + " foi removida.");
                 return;
             }
         }
         
         // Se chegou aqui, a pessoa não está na tabela
-        System.out.println("Pessoa com a chave " + chave + " não está na tabela.");
+        System.out.println("Pessoa com o ID " + chave + " não está na tabela.");
     }
 
     public boolean buscarComEncadeamento(int chave) {
@@ -52,7 +52,7 @@ class TabelaHashEncadeamento {
         LinkedList<Pessoa> lista = tabelaenc[indice];
         for (Pessoa pair : lista) {
             if (pair.getId() == chave) {
-                System.out.print("ID: " + pair.getId() + ", Matrícula: " + pair.getMatricula());
+                System.out.print("ID: " + pair.getId() + ", Ocupação: " + pair.getOcupacao());
                 return true; 
                 
             }
@@ -83,7 +83,7 @@ class TabelaHashEncadeamento {
         for (int i = 0; i < tamanho; i++) {
             System.out.print("Índice " + i + ": ");
             for (Pessoa pair : tabelaenc[i]) {
-                System.out.print("(" + pair.getId() + ", " + pair.getMatricula() + ") -> ");
+                System.out.print("(" + pair.getId() + ", " + pair.getOcupacao() + ") -> ");
             }
             System.out.println("null");
         }

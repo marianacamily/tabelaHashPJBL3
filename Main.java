@@ -21,10 +21,10 @@ public class Main {
                 System.out.print("Digite o ID da Pessoa que será inserida: ");
                 int idInserir = scanner.nextInt();
                 Scanner scannermat = new Scanner(System.in);
-                System.out.print("Digite a Matrícula da Pessoa com esse ID: ");
-                int matriculaInserir = scannermat.nextInt();
-                tabelaenc.inserirComEncadeamento(idInserir, matriculaInserir);
-                tabelaend.inserirComEnderecamentoAberto(idInserir, matriculaInserir);
+                System.out.print("Digite a Ocupação da Pessoa com esse ID: ");
+                String ocupInserir = scannermat.next();
+                tabelaenc.inserirComEncadeamento(idInserir, ocupInserir);
+                tabelaend.inserirComEnderecamentoAberto(idInserir, ocupInserir);
                 System.out.print("Tabela com Encadeamento Interno: ");
                 System.out.println();
                 tabelaenc.imprimirTabelaEnc();
