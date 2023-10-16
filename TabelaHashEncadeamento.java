@@ -1,8 +1,9 @@
 import java.util.LinkedList;
 
+
 class TabelaHashEncadeamento {
     private int tamanho;
-    private LinkedList<Integer>[] tabelaenc;
+    private LinkedList<Pessoa>[] tabelaenc;
     private int elementos;
     private double fatorDeCargaLimite = 0.75;
 
@@ -19,10 +20,9 @@ class TabelaHashEncadeamento {
         return chave % 11;
     }
 
-    // Inserção com tratamento de colisão por encadeamento interno
-    public void inserirComEncadeamento(int valor) {
-        int indice = hash(valor);
-        tabelaenc[indice].add(valor);
+    public void inserirComEncadeamento(int chave, int valor) {
+        int indice = hash(chave);
+        tabelaenc[indice].add(new Pessoa(chave, valor));
         elementos++;
 
         // Verifica o fator de carga
@@ -31,33 +31,47 @@ class TabelaHashEncadeamento {
         }
     }
 
-    // Remoção com tratamento de colisão por encadeamento interno
-    public void removerComEncadeamento(int valor) {
-        int indice = hash(valor);
-        if (tabelaenc[indice].remove(Integer.valueOf(valor))) {
-            elementos--;
+    public void removerComEncadeamento(int chave) {
+        int indice = hash(chave);
+        LinkedList<Pessoa> lista = tabelaenc[indice];
+        for (Pessoa pessoa : lista) {
+            if (pessoa.getId() == chave) {
+                lista.remove(pessoa);
+                elementos--;
+                System.out.println("Pessoa com a chave " + chave + " foi removida.");
+                return;
+            }
         }
+        
+        // Se chegou aqui, a pessoa não está na tabela
+        System.out.println("Pessoa com a chave " + chave + " não está na tabela.");
     }
 
-    // Busca com tratamento de colisão por encadeamento interno
-    public boolean buscarComEncadeamento(int valor) {
-        int indice = hash(valor);
-        return tabelaenc[indice].contains(valor);
+    public boolean buscarComEncadeamento(int chave) {
+        int indice = hash(chave);
+        LinkedList<Pessoa> lista = tabelaenc[indice];
+        for (Pessoa pair : lista) {
+            if (pair.getId() == chave) {
+                System.out.print("ID: " + pair.getId() + ", Matrícula: " + pair.getMatricula());
+                return true; 
+                
+            }
+        }
+        return false; // Chave não encontrada
     }
 
-    // Redimensiona a tabela hash quando o fator de carga é alto
     private void redimensionarTabela() {
         int novoTamanho = tamanho * 2;
-        LinkedList<Integer>[] novaTabela = new LinkedList[novoTamanho];
+        LinkedList<Pessoa>[] novaTabela = new LinkedList[novoTamanho];
 
         for (int i = 0; i < novoTamanho; i++) {
             novaTabela[i] = new LinkedList<>();
         }
 
-        for (LinkedList<Integer> lista : tabelaenc) {
-            for (int valor : lista) {
-                int novoIndice = valor % novoTamanho;
-                novaTabela[novoIndice].add(valor);
+        for (LinkedList<Pessoa> lista : tabelaenc) {
+            for (Pessoa pair : lista) {
+                int novoIndice = hash(pair.getId());
+                novaTabela[novoIndice].add(pair);
             }
         }
 
@@ -68,8 +82,8 @@ class TabelaHashEncadeamento {
     public void imprimirTabelaEnc() {
         for (int i = 0; i < tamanho; i++) {
             System.out.print("Índice " + i + ": ");
-            for (Integer valor : tabelaenc[i]) {
-                System.out.print(valor + " -> ");
+            for (Pessoa pair : tabelaenc[i]) {
+                System.out.print("(" + pair.getId() + ", " + pair.getMatricula() + ") -> ");
             }
             System.out.println("null");
         }

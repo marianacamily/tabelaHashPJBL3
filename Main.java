@@ -11,16 +11,20 @@ public class Main {
         TabelaHashEnderecamento tabelaend = new TabelaHashEnderecamento();
         while (var != 0){
             Scanner inicio = new Scanner(System.in);
+            System.out.println();
             System.out.print("Deseja Realizar [1] Inserção, [2] Busca, [3] Remoção ou [4] Impressão? (Digite qualquer outro n° para sair): ");
             int resposta = inicio.nextInt();
             if (resposta == 1) {
                 System.out.print("===== Opção Selecionada: Inserção =====");
                 System.out.println();
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Digite o novo valor que será inserido: ");
-                int valorInserir = scanner.nextInt();
-                tabelaenc.inserirComEncadeamento(valorInserir);
-                tabelaend.inserirComEnderecamentoAberto(valorInserir);
+                System.out.print("Digite o ID da Pessoa que será inserida: ");
+                int idInserir = scanner.nextInt();
+                Scanner scannermat = new Scanner(System.in);
+                System.out.print("Digite a Matrícula da Pessoa com esse ID: ");
+                int matriculaInserir = scannermat.nextInt();
+                tabelaenc.inserirComEncadeamento(idInserir, matriculaInserir);
+                tabelaend.inserirComEnderecamentoAberto(idInserir, matriculaInserir);
                 System.out.print("Tabela com Encadeamento Interno: ");
                 System.out.println();
                 tabelaenc.imprimirTabelaEnc();
@@ -33,20 +37,26 @@ public class Main {
                 System.out.print("===== Opção Selecionada: Busca =====");
                 System.out.println();
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Digite o valor que deseja buscar: ");
+                System.out.print("Digite o ID que deseja buscar: ");
                 int valorBuscar = scanner.nextInt();
                 System.out.print("Busca na tabela com Encadeamento Interno: ");
-                System.out.println("\nBusca por " + valorBuscar + ": " + tabelaenc.buscarComEncadeamento(valorBuscar));
+                System.out.println();
+                System.out.println("\nBusca pelo ID " + valorBuscar + " = " + tabelaenc.buscarComEncadeamento(valorBuscar));
+                System.out.println();
                 System.out.print("Busca na tabela com Endereçamento Aberto: ");
-                System.out.println("\nBusca por " + valorBuscar + ": " + tabelaend.buscarComEnderecamentoAberto(valorBuscar));
+                System.out.println();
+                System.out.println("\nBusca pelo ID " + valorBuscar + " = " + tabelaend.buscarComEnderecamentoAberto(valorBuscar));
             }
             else if (resposta == 3){
                 System.out.print("===== Opção Selecionada: Remoção =====");
                 System.out.println();
                 Scanner scanner = new Scanner(System.in);
-                System.out.print("Digite o valor que deseja remover: ");
+                System.out.print("Digite o ID da Pessoa que deseja remover: ");
                 int valorRemover = scanner.nextInt();
+                System.out.print("Remoção na tabela com Encadeamento Interno: ");
                 tabelaenc.removerComEncadeamento(valorRemover);
+                System.out.println();
+                System.out.print("Remoção na tabela com Endereçamento Aberto: ");
                 tabelaend.removerComEnderecamentoAberto(valorRemover);
                 System.out.println();
             }
