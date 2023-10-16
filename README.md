@@ -4,4 +4,7 @@ Trabalho da disciplina de Estrutura de Dados, feito por Beatriz Petry, Julia Eng
 # Tratamento de Colisão
 Neste caso, iremos utilizar 2 maneiras de tratar essas colisões, sendo elas: 
 1. Sondagem Linear: Na sondagem linear, quando ocorre uma colisão, o algoritmo procura o próximo slot disponível sequencialmente.
+  ![image](https://github.com/marianacamily/tabelaHashPJBL3/assets/132282038/1930d3a8-d07f-4177-aefa-a7cc72eaa70c)
+
 2. Encadeamento: É uma técnica utilizada em tabelas hash para lidar com situações em que dois ou mais elementos têm o mesmo valor de função de hash, ou seja, colidem.
+  ![image](https://github.com/marianacamily/tabelaHashPJBL3/assets/132282038/3cdb4cfc-dfcd-4a63-973c-cd2b830a4240)
