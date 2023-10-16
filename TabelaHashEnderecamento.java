@@ -1,5 +1,3 @@
-import java.util.LinkedList;
-
 class TabelaHashEnderecamento {
     private int tamanho;
     private Integer[] tabelaend;
@@ -13,10 +11,10 @@ class TabelaHashEnderecamento {
     }
 
     private int hash(int chave) {
-        return chave % tamanho;
+        return chave % 11;
     }
 
-    // Inserção com tratamento de colisão por endereçamento aberto (linear probing)
+    // Inserção com tratamento de colisão por endereçamento aberto 
     public void inserirComEnderecamentoAberto(int valor) {
         if ((double) elementos / tamanho >= fatorDeCargaLimite) {
             redimensionarTabela();
